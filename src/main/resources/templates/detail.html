@@ -44,7 +44,7 @@
             <h5 th:text="${detail.model}"></h5>
             <p th:text="${detail.year}"></p>
             <p th:text="${detail.price}"></p>
-            <a th:href="@{/detail/{id}(id=${detail.id})}" class="btn btn-lg btn-secondary  mt-3 text-white">Details</a>
+
             <a th:href="@{/update/{id}(id=${detail.id})}" class="btn btn-lg btn-secondary mt-3 text-white">Update</a>
             <a th:href="@{/delete/{id}(id=${detail.id})}" class="btn btn-lg btn-secondary mt-3 text-white">Delete</a>
         </div>

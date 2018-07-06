@@ -87,19 +87,19 @@ public class HomeController {
     @RequestMapping("/detail/{id}")
     public String catDetails(@PathVariable("id") long id, Model model){
         model.addAttribute("details", catagoryRepository.findById(id).get());
-        return "categoryDetails";
+        return "redirect:/";
 
     }
 
     @RequestMapping("/update/{id}")
     public String updateCar(@PathVariable("id") long id, Model model)
     {
-        model.addAttribute("meme", vehicleRepository.findById(id));
+        model.addAttribute("car", vehicleRepository.findById(id));
         return "addcar";
     }
 
     @RequestMapping("/delete/{id}")
-    public String delcar(@PathVariable("id") long id){
+    public String deleteCar(@PathVariable("id") long id){
         vehicleRepository.deleteById(id);
         return "redirect:/";
     }
