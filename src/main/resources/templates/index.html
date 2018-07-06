@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Dealer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">
+                <img src="img/logo.png" width="60" height="35" class="d-inline-block align-top"  alt="logo"/>
+                Get Your Car Here
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/addCar">Add a Car</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/addCategory">Add a Category</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="bg-light pl-4 pr-4 pt-4 back">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <h2>Let's ROLL Car Dealers</h2>
+                <p>Add a new listing or view our selections</p>
+                <a href="/addCar" class="btn btn-lg btn-secondary mt-2">Add a car</a>
+                <a href="/addCategory" class="btn btn-lg btn-secondary mt-2">Add a category</a>
+            </div>
+        </div>
+        <hr/>
+    </div>
+<!--category lists-->
+    <div class="p-3">
+        <h2>Categories</h2>
+       <div class="row">
+           <div class="col-sm-6 col-md-2 mt-2" th:each="category :${categories}">
+               <a class="nav-link btn btn-info" th:href="@{/detail/{id}(id=${category.id})}" th:text="${category.vehicleCatagory}"> </a>
+           </div>
+       </div>
+    </div>
+    <!---->
+    <div class="bg-light ">
+        <div class="row"  >
+            <div class="col-sm-12 mt-2 col-md-4 "  th:each="type:${cars}">
+                <div class="card " >
+                    <div class="card-body">
+                        <div th:if="${type.image}!= null">
+                            <img th:src="${type.image}" alt="vehicle picture" class="img-responsive img-fluid " />
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <h4 th:text="${type.manufacturer}"></h4>
+                        <h5 th:text="${type.model}"></h5>
+                        <p th:text="${type.year}"></p>
+                        <p th:text="${type.price}"></p>
+                        <a th:href="@{/detail/{id}(id=${type.id})}" class="btn btn-sm btn-secondary  mt-3 text-white">Details</a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div th:replace="base :: scripts"></div>
+</body>
+</html>

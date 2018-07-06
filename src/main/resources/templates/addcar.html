@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+        <div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">
+                <img src="img/logo.png" width="60" height="35" class="d-inline-block align-top"  alt="logo"/>
+                Get Your Car Here
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link " href="/addCar">Add a Car</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/addCategory">Add a Category</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="bg-light">
+        <h3 class="text-center p-3">Add a Vehicle to the Listing</h3>
+        <div class="row p-4">
+            <div class="col-sm-0 col-md-2">&nbsp;</div>
+            <div class="col-sm-12 col-md-8 mt-2">
+                <form th:action="@{/carProcess}"
+                             th:object="${car}" class="form-group"
+                             action="#" enctype="multipart/form-data" method="post">
+                <!---------------->
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" th:field="*{id}">
+                    </div>
+                    <div class="form-group">
+                        <label>Manufacturer</label>
+                        <input type="text" class="form-control" th:field="*{manufacturer}" placeholder="Enter a manufacturer" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Model</label>
+                        <input type="text" class="form-control" placeholder="Enter a model" th:field="*{model}" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Year</label>
+                        <input type="number" min="1950" max="2019" class="form-control" th:field="*{year}" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>MSRP</label>
+                        <input type="number" class="form-control" min="0" step="0.01" th:field="*{price}"  required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Category Type</label>
+                        <select class="form-control" th:field="*{category}">
+                            <option value="">--</option>
+                            <option th:each="carCategory :${categories}" th:value="${carCategory.id}"
+                                    th:utext="${carCategory. vehicleCatagory}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Car Image</label>
+                        <input type="file" class="form-control" name="file" required/>
+                    </div>
+                    <div align="center" class="mt-4 form-group">
+                        <input class="btn-lg btn-warning btn" type="submit" name="Submit"/>
+                    </div>
+
+
+
+            </form>
+            </div>
+            <div class="col-sm-0 col-md-2">&nbsp;</div>
+        </div>
+    </div>
+
+</div>
+
+
+<div th:replace ="base :: scripts"></div>
+</body>
+</html>
