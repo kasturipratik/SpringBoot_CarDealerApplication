@@ -62,8 +62,8 @@ public class HomeController {
             Map uploadResult = cloudc.upload(file.getBytes(), ObjectUtils.asMap("resourcestype", "auto"));
             cars.setImage(uploadResult.get("url").toString());
 
-            Set<CarDealer> carDealers = new HashSet<CarDealer>();
-            carDealers.add(cars);
+          /*  Set<CarDealer> carDealers = new HashSet<CarDealer>();
+            carDealers.add(cars);*/
 
             /*Category category = new Category();
             category.setCars(carDealers);*/
@@ -79,16 +79,29 @@ public class HomeController {
 
     @RequestMapping("/details/{id}")
     public String details(@PathVariable("id") long id, Model model){
-        model.addAttribute("detail", vehicleRepository.findById(id));
+        model.addAttribute("detail", vehicleRepository.findById(id).get());
         return "detail";
 
     }
 
     @RequestMapping("/detail/{id}")
     public String catDetails(@PathVariable("id") long id, Model model){
-        model.addAttribute("details", catagoryRepository.findById(id));
+        model.addAttribute("details", catagoryRepository.findById(id).get());
         return "categoryDetails";
 
+    }
+
+    @RequestMapping("/update/{id}")
+    public String updateCar(@PathVariable("id") long id, Model model)
+    {
+        model.addAttribute("meme", vehicleRepository.findById(id));
+        return "addcar";
+    }
+
+    @RequestMapping("/delete/{id}")
+    public String delcar(@PathVariable("id") long id){
+        vehicleRepository.deleteById(id);
+        return "redirect:/";
     }
 
 }
