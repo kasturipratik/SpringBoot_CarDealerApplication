@@ -27,7 +27,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String index(Model model){
-
+        model.addAttribute("cars", vehicleRepository.findAll());
         model.addAttribute("categories", catagoryRepository.findAll());
         return "index";
     }
@@ -58,11 +58,12 @@ public class HomeController {
     }
 
     @PostMapping("/carProcess")
-    public String processCar(@ModelAttribute("car") CarDealer cars,BindingResult result,@ModelAttribute("categories") Category category,BindingResult categoryResult, @RequestParam("file")MultipartFile file){
-
+    public String processCar(@ModelAttribute("car") CarDealer cars/*,BindingResult result,@ModelAttribute("categories")
+            Category category,BindingResult categoryResult*/, @RequestParam("file")MultipartFile file){
+/*
         if(result.hasErrors() || categoryResult.hasErrors()){
             return "redirect:/addCar";
-        }
+        }*/
         if(file.isEmpty()){
             return "redirect:/addCar";
         }
@@ -70,12 +71,12 @@ public class HomeController {
             Map uploadResult = cloudc.upload(file.getBytes(), ObjectUtils.asMap("resourcestype", "auto"));
             cars.setImage(uploadResult.get("url").toString());
 
-            Set<CarDealer> carDealers = new HashSet<CarDealer>();
+           /* Set<CarDealer> carDealers = new HashSet<CarDealer>();
             carDealers.add(cars);
 
-            category.setCars(carDealers);
+            category.setCars(carDealers);*/
 
-            catagoryRepository.save(category);
+           vehicleRepository.save(cars);
 
         }catch(IOException e){
             e.printStackTrace();
@@ -84,7 +85,7 @@ public class HomeController {
         return "redirect:/";
     }
 
- /*   @RequestMapping("/details/{id}")
+    @RequestMapping("/details/{id}")
     public String details(@PathVariable("id") long id, Model model){
 
         model.addAttribute("car", vehicleRepository.findById(id).get());
@@ -112,6 +113,6 @@ public class HomeController {
 
         vehicleRepository.deleteById(id);
         return "redirect:/";
-    }*/
+    }
 
 }
