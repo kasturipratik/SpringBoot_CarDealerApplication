@@ -27,34 +27,42 @@ public class HomeController {
 
     @GetMapping("/")
     public String index(Model model){
+
         model.addAttribute("categories", catagoryRepository.findAll());
-        model.addAttribute("cars", vehicleRepository.findAll());
         return "index";
     }
 
 
     @RequestMapping("/addCategory")
     public String addCategory(Model model){
-        model.addAttribute("category", new Category());
+        model.addAttribute("newCategory", new Category());
+        model.addAttribute("listCategory", catagoryRepository.findAll());
         return "addcategory";
     }
 
     @PostMapping("/processCategory")
-    public String processCategory(@ModelAttribute Category category){
+    public String processCategory(@ModelAttribute Category category, Model model){
+
         catagoryRepository.save(category);
-        return "redirect:/";
+        model.addAttribute("newCategory", category);
+        model.addAttribute("listCategory", catagoryRepository.findAll());
+        return "addcategory";
     }
 
     @RequestMapping("/addCar")
     public String addCar(Model model){
+
         model.addAttribute("car",new CarDealer());
         model.addAttribute("categories", catagoryRepository.findAll());
-
         return "addcar";
     }
 
     @PostMapping("/carProcess")
-    public String processCar(@ModelAttribute("car") CarDealer cars, @RequestParam("file")MultipartFile file){
+    public String processCar(@ModelAttribute("car") CarDealer cars,BindingResult result,@ModelAttribute("categories") Category category,BindingResult categoryResult, @RequestParam("file")MultipartFile file){
+
+        if(result.hasErrors() || categoryResult.hasErrors()){
+            return "redirect:/addCar";
+        }
         if(file.isEmpty()){
             return "redirect:/addCar";
         }
@@ -62,13 +70,12 @@ public class HomeController {
             Map uploadResult = cloudc.upload(file.getBytes(), ObjectUtils.asMap("resourcestype", "auto"));
             cars.setImage(uploadResult.get("url").toString());
 
-          /*  Set<CarDealer> carDealers = new HashSet<CarDealer>();
-            carDealers.add(cars);*/
+            Set<CarDealer> carDealers = new HashSet<CarDealer>();
+            carDealers.add(cars);
 
-            /*Category category = new Category();
-            category.setCars(carDealers);*/
-         vehicleRepository.save(cars);
-    /*    catagoryRepository.save(category);*/
+            category.setCars(carDealers);
+
+            catagoryRepository.save(category);
 
         }catch(IOException e){
             e.printStackTrace();
@@ -77,9 +84,10 @@ public class HomeController {
         return "redirect:/";
     }
 
-    @RequestMapping("/details/{id}")
+ /*   @RequestMapping("/details/{id}")
     public String details(@PathVariable("id") long id, Model model){
-        model.addAttribute("detail", vehicleRepository.findById(id).get());
+
+        model.addAttribute("car", vehicleRepository.findById(id).get());
         return "detail";
 
     }
@@ -95,13 +103,15 @@ public class HomeController {
     public String updateCar(@PathVariable("id") long id, Model model)
     {
         model.addAttribute("car", vehicleRepository.findById(id));
+        model.addAttribute("categories", catagoryRepository.findAll());
         return "addcar";
     }
 
     @RequestMapping("/delete/{id}")
     public String deleteCar(@PathVariable("id") long id){
+
         vehicleRepository.deleteById(id);
         return "redirect:/";
-    }
+    }*/
 
 }

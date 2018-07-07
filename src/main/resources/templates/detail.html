@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Details</title>
+    <title>cars</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
           integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 </head>
@@ -35,18 +35,18 @@
     </div>
     <div class="card" >
         <div class="card-body">
-            <div th:if="${detail.image}!= null">
-                <img th:src="${detail.image}" alt="vehicle picture" class="img-responsive img-fluid " />
+            <div th:if="${car.image}!= null">
+                <img th:src="${car.image}" alt="vehicle picture" class="img-responsive img-fluid " />
             </div>
         </div>
         <div class="card-footer">
-            <h4 th:text="${detail.manufacturer}"></h4>
-            <h5 th:text="${detail.model}"></h5>
-            <p th:text="${detail.year}"></p>
-            <p th:text="${detail.price}"></p>
+            <h4 th:text="${car.manufacturer}"></h4>
+            <h5 th:text="${car.model}"></h5>
+            <p th:text="${car.year}"></p>
+            <p th:text="${car.price}"></p>
 
-            <a th:href="@{/update/{id}(id=${detail.id})}" class="btn btn-lg btn-secondary mt-3 text-white">Update</a>
-            <a th:href="@{/delete/{id}(id=${detail.id})}" class="btn btn-lg btn-secondary mt-3 text-white">Delete</a>
+            <a th:href="@{/update/{id} (id=${car.id})}" class="btn btn-lg btn-secondary mt-3 text-white">Update</a>
+            <a th:href="@{/delete/{id} (id=${car.id})}" class="btn btn-lg btn-secondary mt-3 text-white">Delete</a>
         </div>
 
     </div>

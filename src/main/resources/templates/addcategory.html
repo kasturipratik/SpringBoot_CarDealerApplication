@@ -37,39 +37,50 @@
         <div class="bg-light p-4">
 
             <h2 class="text-center">Add a Category</h2>
-
-            <div class="col-sm-0 col-md-2"></div>
-            <div class="col-sm-12 col-md-8">
-                <form class="form-group" action="#" th:action="@{/processCategory}"
-                      th:object="${category}" method="post">
-                    <div class="form-group">
-                        <input type="hidden" class="form-control" th:field="*{id}">
-                    </div>
-                    <div class="form-group">
-                        <label>Category</label>
-                        <input class="form-control" th:field="*{vehicleCatagory}"/>
-                    </div>
-                    <div class="form-group">
-                        <input class="btn btn-lg btn-secondary" type="submit" value="submit"/>
-                    </div>
-                </form>
-                <hr>
-            </div>
-            <div class="col-sm-0 col-md-2"></div>
-        </div>
- <!--       <div class="bg-light">
             <div class="row">
                 <div class="col-sm-0 col-md-2"></div>
-                    <div class="col-sm-12 col-md-6">
-                        <h2>You Added:</h2>
-                        <div th:with="added=${catogory}">
+                <div class="col-sm-12 col-md-8">
+                    <form class="form-group" action="#" th:action="@{/processCategory}"
+                          th:object="${newCategory}" method="post">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" th:field="*{id}">
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <input class="form-control" th:field="*{vehicleCatagory}"/>
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-lg btn-secondary" type="submit" value="submit"/>
+                            <a class="btn btn-lg btn-secondary" href="/addCategory">Add More</a>
+                        </div>
+                    </form>
+                    <hr>
+                </div>
+                <div class="col-sm-0 col-md-2"></div>
+            </div>
+        </div>
+        <div class="bg-light p-4">
+            <div class="row">
+                <div class="col-sm-0 col-md-2"></div>
+                    <div class="col-sm-12 col-md-4">
+                        <h4>You Added:</h4>
+                        <hr/>
+                        <div th:with="added=${newCategory}">
                             <span th:text="${added.vehicleCatagory}"></span>
                         </div>
-                        <hr/>
+
                     </div>
-                         <div class="col-sm-0 col-md-2"></div>
+                <div class="col-sm-12 col-md-4">
+                    <h4>Category List</h4>
+                    <hr/>
+                    <div th:each="list:${listCategory}">
+                        <span th:text="${list.vehicleCatagory}"></span>
+                    </div>
+
+                </div>
+                <div class="col-sm-0 col-md-2"></div>
             </div>
-        </div>-->
+        </div>
     </div>
 
 
