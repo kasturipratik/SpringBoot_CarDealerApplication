@@ -75,7 +75,7 @@
                     <h4>Category List</h4>
                     <hr/>
                     <div th:each="list:${listCategory}">
-                        <span th:text="${list.vehicleCatagory}"></span>
+                        <span th:inline="text">[[${list.id}]]. [[${list.vehicleCatagory}]]</span>
                     </div>
 
                 </div>

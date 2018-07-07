@@ -96,7 +96,7 @@ public class HomeController {
     @RequestMapping("/detail/{id}")
     public String catDetails(@PathVariable("id") long id, Model model){
         model.addAttribute("details", catagoryRepository.findById(id).get());
-        return "redirect:/";
+        return "categoryDetail";
 
     }
 

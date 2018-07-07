@@ -42,9 +42,9 @@
                              th:object="${car}" class="form-group"
                              action="#" enctype="multipart/form-data" method="post">
                 <!---------------->
-                    <div class="form-group">
-                        <input type="hidden" class="form-control" th:field="*{id}">
-                    </div>
+                     <!--hidden ID-->
+                    <input type="hidden" class="form-control" th:field="*{id}"/>
+                    <!---->
                     <div class="form-group">
                         <label>Manufacturer</label>
                         <input type="text" class="form-control" th:field="*{manufacturer}" placeholder="Enter a manufacturer" required/>
