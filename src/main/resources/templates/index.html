@@ -49,7 +49,7 @@
         <h2>Categories</h2>
        <div class="row">
            <div class="col-sm-6 col-md-2 mt-2" th:each="category :${categories}">
-               <a class="nav-link btn btn-info" th:href="@{/detail/{id}(id=${category.id})}" th:text="${category.vehicleCatagory}"> </a>
+               <a class="nav-link btn btn-info" th:href="@{/categoryDetail/{id}(id=${category.id})}" th:text="${category.vehicleCatagory}"> </a>
            </div>
        </div>
     </div>

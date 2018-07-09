@@ -1,6 +1,10 @@
 package com.example.cardealer;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -28,8 +32,10 @@ public class Category {
         this.vehicleCatagory = vehicleCatagory;
     }
 
-    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    public Set<CarDealer> cars;
+    @OneToMany(mappedBy = "category",orphanRemoval = true,
+            cascade = CascadeType.REMOVE)
+    @Fetch(value = FetchMode.SUBSELECT)
+    private Set<CarDealer> cars;
 
     public Set<CarDealer> getCars() {
         return cars;
@@ -38,4 +44,6 @@ public class Category {
     public void setCars(Set<CarDealer> cars) {
         this.cars = cars;
     }
+
+
 }

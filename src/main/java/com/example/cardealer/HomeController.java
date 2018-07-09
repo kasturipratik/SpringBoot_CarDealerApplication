@@ -26,7 +26,7 @@ public class HomeController {
     VehicleRepository vehicleRepository;
 
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model,@ModelAttribute Category category,@ModelAttribute CarDealer car){
         model.addAttribute("cars", vehicleRepository.findAll());
         model.addAttribute("categories", catagoryRepository.findAll());
         return "index";
@@ -36,6 +36,7 @@ public class HomeController {
     @RequestMapping("/addCategory")
     public String addCategory(Model model){
         model.addAttribute("newCategory", new Category());
+        model.addAttribute("count", catagoryRepository.count());
         model.addAttribute("listCategory", catagoryRepository.findAll());
         return "addcategory";
     }
@@ -46,24 +47,28 @@ public class HomeController {
         catagoryRepository.save(category);
         model.addAttribute("newCategory", category);
         model.addAttribute("listCategory", catagoryRepository.findAll());
+        model.addAttribute("count", 1);
+
         return "addcategory";
     }
 
     @RequestMapping("/addCar")
     public String addCar(Model model){
+        if(catagoryRepository.count() < 1){
 
-        model.addAttribute("car",new CarDealer());
-        model.addAttribute("categories", catagoryRepository.findAll());
-        return "addcar";
+            return "redirect:/addCategory";
+        }
+        else{
+            model.addAttribute("car",new CarDealer());
+            model.addAttribute("categories", catagoryRepository.findAll());
+            return "addcar";
+        }
+
     }
 
     @PostMapping("/carProcess")
-    public String processCar(@ModelAttribute("car") CarDealer cars/*,BindingResult result,@ModelAttribute("categories")
-            Category category,BindingResult categoryResult*/, @RequestParam("file")MultipartFile file){
-/*
-        if(result.hasErrors() || categoryResult.hasErrors()){
-            return "redirect:/addCar";
-        }*/
+    public String processCar(@ModelAttribute CarDealer cars, @RequestParam("file")MultipartFile file){
+
         if(file.isEmpty()){
             return "redirect:/addCar";
         }
@@ -71,12 +76,9 @@ public class HomeController {
             Map uploadResult = cloudc.upload(file.getBytes(), ObjectUtils.asMap("resourcestype", "auto"));
             cars.setImage(uploadResult.get("url").toString());
 
-           /* Set<CarDealer> carDealers = new HashSet<CarDealer>();
-            carDealers.add(cars);
 
-            category.setCars(carDealers);*/
+            vehicleRepository.save(cars);
 
-           vehicleRepository.save(cars);
 
         }catch(IOException e){
             e.printStackTrace();
@@ -88,13 +90,16 @@ public class HomeController {
     @RequestMapping("/details/{id}")
     public String details(@PathVariable("id") long id, Model model){
 
+
         model.addAttribute("car", vehicleRepository.findById(id).get());
         return "detail";
 
     }
 
-    @RequestMapping("/detail/{id}")
+    @RequestMapping("/categoryDetail/{id}")
     public String catDetails(@PathVariable("id") long id, Model model){
+
+        model.addAttribute("vehicle", vehicleRepository.findAll());
         model.addAttribute("details", catagoryRepository.findById(id).get());
         return "categoryDetail";
 

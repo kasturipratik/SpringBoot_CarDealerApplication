@@ -33,20 +33,35 @@
             </div>
         </nav>
     </div>
+    <!---->
     <div class="bg-light p-4">
-        <div class="row">
-            <div class="col-sm-12 col-md-4">
+          <h3 th:inline="text">  [[${details.vehicleCatagory}]]</h3>
+    </div>
+    <!---->
+    <div class="row">
+        <div th:each="car:${vehicle}" >
+          <div  class="col-sm-12 col-md-5" >
+              <div th:if="${car.category.id == details.id}">
                 <div class="card">
                     <div class="card-body">
-                        <h3 th:inline="text"> [[${details.id}]] [[${details.vehicleCatagory}]]</h3>
+                        <div th:if="${car.image}!= null">
+                            <img th:src="${car.image}" alt="vehicle picture" class="img-responsive img-fluid " />
+                        </div>
                     </div>
-                    <div class="card-footer bg-success">
-                        &nbsp;
+                    <div class="card-footer">
+                        <h4 th:text="${car.manufacturer}"></h4>
+                        <h5 th:text="${car.model}"></h5>
+                        <p th:text="${car.year}"></p>
+                        <p th:text="${car.price}"></p>
+                        <a th:href="@{/update/{id} (id=${car.id})}" class="btn btn-sm btn-secondary mt-3 text-white">Update</a>
+                        <a th:href="@{/delete/{id} (id=${car.id})}" class="btn btn-sm btn-secondary mt-3 text-white">Delete</a>
                     </div>
-                </div>
-            </div>
+                 </div>
+              </div>
+          </div>
         </div>
-    </div>
+      </div>
+</div>
 
 
 
