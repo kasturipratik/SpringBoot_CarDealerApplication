@@ -39,9 +39,9 @@
     </div>
     <!---->
     <div class="row">
-        <div th:each="car:${vehicle}" >
-          <div  class="col-sm-12 col-md-5" >
-              <div th:if="${car.category.id == details.id}">
+
+          <div  class="col-sm-12 col-md-4" th:each="car:${vehicle}"  th:if="${car.category.id == details.id}" >
+
                 <div class="card">
                     <div class="card-body">
                         <div th:if="${car.image}!= null">
@@ -59,8 +59,7 @@
                  </div>
               </div>
           </div>
-        </div>
-      </div>
+
 </div>
 
 
